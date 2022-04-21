@@ -1,12 +1,5 @@
-import {
-  BaseSource,
-  Candidate,
-  Context,
-} from "https://deno.land/x/ddc_vim@v0.17.0/types.ts#^";
-import {
-  Denops,
-  fn,
-} from "https://deno.land/x/ddc_vim@v0.13.0/deps.ts#^";
+import { BaseSource, Item } from "https://deno.land/x/ddc_vim@v2.2.0/types.ts";
+import { Denops, fn } from "https://deno.land/x/ddc_vim@v2.2.0/deps.ts";
 
 type Params = {
   cmd: string;
@@ -14,15 +7,16 @@ type Params = {
 };
 
 export class Source extends BaseSource<Params> {
-  async gatherCandidates(args: {
-    denops: Denops,
-    completeStr: string,
-    sourceParams: Params,
-  }): Promise<Candidate[]> {
-    const cwd = await fn.getcwd(args.denops);
-    const input = args.completeStr.replaceAll(/([\\\[\]^$.*])/g, '\\$1');
+  async gather(args: {
+    denops: Denops;
+    completeStr: string;
+    sourceParams: Params;
+  }): Promise<Item[]> {
+    const cwd = await fn.getcwd(args.denops) as string;
+    const input = args.completeStr.replaceAll(/([\\\[\]^$.*])/g, "\\$1");
     const cmd = [args.sourceParams.cmd].concat(
-      args.sourceParams.args).concat([input + '[a-zA-Z0-9_-]+', cwd]);
+      args.sourceParams.args,
+    ).concat([input + "[a-zA-Z0-9_-]+", cwd]);
 
     const p = Deno.run({
       cmd: cmd,
@@ -44,9 +38,14 @@ export class Source extends BaseSource<Params> {
     return {
       cmd: "rg",
       args: [
-        "--no-filename", "--no-heading", "--no-line-number",
-        "--color", "never", "--only-matching",
-        "--word-regexp", "--ignore-case",
+        "--no-filename",
+        "--no-heading",
+        "--no-line-number",
+        "--color",
+        "never",
+        "--only-matching",
+        "--word-regexp",
+        "--ignore-case",
       ],
     };
   }
