@@ -1,17 +1,17 @@
-*ddc-rg.txt*	rg completion for ddc.vim
+*ddc-source-rg.txt*	rg completion for ddc.vim
 
 Author: Shougo <Shougo.Matsu at gmail.com>
 License: MIT license
 
-CONTENTS					*ddc-rg-contents*
+CONTENTS					*ddc-source-rg-contents*
 
-Introduction		|ddc-rg-introduction|
-Install			|ddc-rg-install|
-Examples		|ddc-rg-examples|
+Introduction		|ddc-source-rg-introduction|
+Install			|ddc-source-rg-install|
+Examples		|ddc-source-rg-examples|
 
 
 ==============================================================================
-INTRODUCTION					*ddc-rg-introduction*
+INTRODUCTION					*ddc-source-rg-introduction*
 
 A ddc.vim source for `rg` for completing words.
 
@@ -21,7 +21,7 @@ Note: It may be slow in huge project directory.
 
 
 ==============================================================================
-INSTALL							*ddc-rg-install*
+INSTALL							*ddc-source-rg-install*
 
 Please install both "ddc.vim" and "denops.vim".
 
@@ -34,7 +34,7 @@ https://github.com/BurntSushi/ripgrep
 
 
 ==============================================================================
-EXAMPLES					*ddc-rg-examples*
+EXAMPLES					*ddc-source-rg-examples*
 >
 >
 	call ddc#custom#patch_global('sources', ['rg'])

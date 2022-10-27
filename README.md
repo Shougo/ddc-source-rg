@@ -1,4 +1,4 @@
-# ddc-rg: rg completion for ddc.vim
+# ddc-source-rg: rg completion for ddc.vim
 
 A ddc.vim source for `rg`.
 
