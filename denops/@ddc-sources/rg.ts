@@ -1,5 +1,5 @@
-import { BaseSource, Item } from "https://deno.land/x/ddc_vim@v3.0.0/types.ts";
-import { Denops, fn } from "https://deno.land/x/ddc_vim@v3.0.0/deps.ts";
+import { BaseSource, Item } from "https://deno.land/x/ddc_vim@v3.2.0/types.ts";
+import { Denops, fn } from "https://deno.land/x/ddc_vim@v3.2.0/deps.ts";
 
 type Params = {
   cmd: string;

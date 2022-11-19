@@ -13,9 +13,11 @@ A ddc.vim source for `rg`.
 ```vim
 call ddc#custom#patch_global('sources', ['rg'])
 
-" Change source options
-call ddc#custom#patch_global('sourceOptions', {
-        \ 'rg': {'mark': 'rg', 'minAutoCompleteLength': 4,},
+call ddc#custom#patch_global('sourceOptions', #{
+        \   rg: #{
+        \     mark: 'rg',
+        \     minAutoCompleteLength: 4,
+        \   },
         \ })
 ```
 
