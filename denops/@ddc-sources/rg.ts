@@ -7,7 +7,7 @@ type Params = {
 };
 
 export class Source extends BaseSource<Params> {
-  async gather(args: {
+  override async gather(args: {
     denops: Denops;
     completeStr: string;
     sourceParams: Params;
@@ -34,7 +34,7 @@ export class Source extends BaseSource<Params> {
     return candidates;
   }
 
-  params(): Params {
+  override params(): Params {
     return {
       cmd: "rg",
       args: [
