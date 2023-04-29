@@ -27,11 +27,11 @@ export class Source extends BaseSource<Params> {
     const { stdout } = await command.output();
 
     const lines = new TextDecoder().decode(stdout).split(/\r?\n/);
-    const candidates = [...new Set(lines)]
+    const items = [...new Set(lines)]
       .filter((line) => line.length != 0)
       .map((word: string) => ({ word }));
 
-    return candidates;
+    return items;
   }
 
   override params(): Params {
