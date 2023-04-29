@@ -1,5 +1,5 @@
-import { BaseSource, Item } from "https://deno.land/x/ddc_vim@v3.2.0/types.ts";
-import { Denops, fn } from "https://deno.land/x/ddc_vim@v3.2.0/deps.ts";
+import { BaseSource, Item } from "https://deno.land/x/ddc_vim@v3.4.0/types.ts";
+import { Denops, fn } from "https://deno.land/x/ddc_vim@v3.4.0/deps.ts";
 
 type Params = {
   cmd: string;
@@ -18,15 +18,15 @@ export class Source extends BaseSource<Params> {
       args.sourceParams.args,
     ).concat([input + "[a-zA-Z0-9_-]+", cwd]);
 
-    const p = Deno.run({
-      cmd: cmd,
-      stdout: "piped",
-      stderr: "piped",
-      stdin: "null",
-    });
-    await p.status();
+    const command = new Deno.Command(
+      cmd[0], {
+        args: cmd.slice(1),
+      }
+    );
 
-    const lines = new TextDecoder().decode(await p.output()).split(/\r?\n/);
+    const { stdout } = await command.output();
+
+    const lines = new TextDecoder().decode(stdout).split(/\r?\n/);
     const candidates = [...new Set(lines)]
       .filter((line) => line.length != 0)
       .map((word: string) => ({ word }));
