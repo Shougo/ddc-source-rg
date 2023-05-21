@@ -36,7 +36,6 @@ https://github.com/BurntSushi/ripgrep
 ==============================================================================
 EXAMPLES					*ddc-source-rg-examples*
 >
->
 	call ddc#custom#patch_global('sources', ['rg'])
 
 	call ddc#custom#patch_global('sourceOptions', #{
