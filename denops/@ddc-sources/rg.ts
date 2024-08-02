@@ -1,5 +1,7 @@
-import { BaseSource, Item } from "https://deno.land/x/ddc_vim@v4.1.0/types.ts";
-import { Denops, fn } from "https://deno.land/x/ddc_vim@v4.1.0/deps.ts";
+import { BaseSource, type Item } from "jsr:@shougo/ddc-vim@6.0.0/types";
+
+import type { Denops } from "jsr:@denops/core@^7.0.0";
+import * as fn from "jsr:@denops/std@7.0.1/function";
 
 type Params = {
   cmd: string;
@@ -19,9 +21,10 @@ export class Source extends BaseSource<Params> {
     ).concat([input + "[a-zA-Z0-9_-]+", cwd]);
 
     const command = new Deno.Command(
-      cmd[0], {
+      cmd[0],
+      {
         args: cmd.slice(1),
-      }
+      },
     );
 
     const { stdout } = await command.output();
