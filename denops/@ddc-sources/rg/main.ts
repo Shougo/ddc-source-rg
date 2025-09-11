@@ -17,9 +17,12 @@ export class Source extends BaseSource<Params> {
   }): Promise<Item[]> {
     const cwd = await fn.getcwd(args.denops) as string;
     const input = args.completeStr.replaceAll(/([\\\[\]^$.*])/g, "\\$1");
-    const cmd = [args.sourceParams.cmd].concat(
-      args.sourceParams.args,
-    ).concat([input + "[a-zA-Z0-9_-]+", cwd]);
+    const cmd = [
+      args.sourceParams.cmd,
+      ...args.sourceParams.args,
+      input + "[a-zA-Z0-9_-]+",
+      cwd,
+    ];
 
     const command = new Deno.Command(
       cmd[0],
