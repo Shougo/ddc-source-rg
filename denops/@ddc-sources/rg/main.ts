@@ -16,7 +16,12 @@ export class Source extends BaseSource<Params> {
     sourceParams: Params;
   }): Promise<Item[]> {
     const cwd = await fn.getcwd(args.denops) as string;
-    const input = args.completeStr.replaceAll(/([\\\[\]^$.*])/g, "\\$1");
+
+    function escapeRegExp(str: string): string {
+      return str.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    }
+    const input = escapeRegExp(args.completeStr);
+
     const cmd = [
       args.sourceParams.cmd,
       ...args.sourceParams.args,
@@ -24,17 +29,29 @@ export class Source extends BaseSource<Params> {
       cwd,
     ];
 
-    const command = new Deno.Command(
-      cmd[0],
-      {
-        args: cmd.slice(1),
-      },
-    );
+    const command = new Deno.Command(cmd[0], {
+      args: cmd.slice(1),
+      stdout: "piped",
+      stderr: "piped",
+    });
 
-    const { stdout } = await command.output();
+    const proc = command.spawn();
 
-    const lines = new TextDecoder().decode(stdout).split(/\r?\n/);
-    const items = [...new Set(lines)]
+    const [stdout, stderr, status] = await Promise.all([
+      new Response(proc.stdout).text(),
+      new Response(proc.stderr).text(),
+      proc.status,
+    ]);
+
+    if (!status.success) {
+      console.error("[ddc-rg] rg exited with non-zero status");
+      if (stderr.length > 0) {
+        console.error(stderr);
+      }
+      return [];
+    }
+
+    const items = [...new Set(stdout.split(/\r?\n/))]
       .filter((line) => line.length != 0)
       .map((word: string) => ({ word }));
 
