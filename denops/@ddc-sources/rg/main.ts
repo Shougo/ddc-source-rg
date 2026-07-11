@@ -43,7 +43,7 @@ export class Source extends BaseSource<Params> {
       proc.status,
     ]);
 
-    if (!status.success) {
+    if (status.code >= 2) {
       console.error("[ddc-rg] rg exited with non-zero status");
       if (stderr.length > 0) {
         console.error(stderr);
