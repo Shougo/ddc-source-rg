@@ -43,7 +43,8 @@ export class Source extends BaseSource<Params> {
       proc.status,
     ]);
 
-    if (status.code >= 2) {
+    // NOTE: 1 means no matches in ripgrep
+    if (!status.success && status.code >= 2) {
       console.error("[ddc-rg] rg exited with non-zero status");
       if (stderr.length > 0) {
         console.error(stderr);
